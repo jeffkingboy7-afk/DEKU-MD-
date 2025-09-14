@@ -2,7 +2,7 @@
 ━≫mᥙᥣ𝗍і ძᥱ᥎іᥴᥱ ᥕһᥲ𝗍sᥲ⍴⍴ ᑲ᥆𝗍 ᑲᥡ Jeffrey LMB ≪━
 # 🤖 DEKU-MD Bot WhatsApp
 
-![DEKU-MD Banner](https://i.imgur.com/N7F6V2y.png)
+![DEKU-MD Banner]([![9101c896ef2d463f1236f9f323f12fbe.jpg](https://i.postimg.cc/HxdvPM2H/9101c896ef2d463f1236f9f323f12fbe.jpg)](https://postimg.cc/VSZFJdpH))
 
 DEKU-MD est un **bot WhatsApp Multi-Device** développé avec [Baileys](https://github.com/WhiskeySockets/Baileys).  
 Il offre **50 commandes** prêtes à l'emploi : utilitaires, fun, médias, jeux et divers.
