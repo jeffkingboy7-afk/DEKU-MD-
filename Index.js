@@ -220,3 +220,50 @@ fact, advice, horoscope, news, covid, stock, remind, alarm, todo, poll
       case "remind":
       case "alarm":
       case "todo
+        // Tableaux pour codes et utilisateurs autorisés
+let validCodes = [];
+let authorizedUsers = [];
+
+// Fonction pour générer un code secret de 8 caractères minimum
+function generateSecretCode(length = 8) {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let code = "";
+  for (let i = 0; i < length; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+// Événement messages
+sock.ev.on("messages.upsert", async (msg) => {
+  const m = msg.messages[0];
+  if (!m.message || m.key.fromMe) return;
+
+  const from = m.key.remoteJid;
+  const text = (m.message.conversation || "").trim();
+
+  // Génération du code avec la commande .code
+  if (text === ".code") {
+    const code = generateSecretCode(8); // code de 8 caractères
+    validCodes.push({ code, user: from });
+    await sock.sendMessage(from, { text: `✅ Votre code secret (8+ caractères) : ${code}\nEnvoyez-le maintenant pour vous connecter.` });
+    return;
+  }
+
+  // Vérification du code envoyé par l'utilisateur
+  const codeEntry = validCodes.find(c => c.code === text && c.user === from);
+  if (codeEntry) {
+    authorizedUsers.push(from);
+    validCodes = validCodes.filter(c => c !== codeEntry);
+    await sock.sendMessage(from, { text: "🎉 Code validé ! Vous êtes maintenant connecté au bot." });
+    return;
+  }
+
+  // Bloquer les commandes si utilisateur non autorisé
+  if (!authorizedUsers.includes(from)) {
+    await sock.sendMessage(from, { text: "❌ Vous devez vous connecter avec .code avant d'utiliser le bot." });
+    return;
+  }
+
+  // Ici tu peux ajouter le reste des commandes
+});
